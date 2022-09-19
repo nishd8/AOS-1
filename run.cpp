@@ -55,7 +55,7 @@ int main()
 
     string firstLine;
     string otherLines;
-    int nodeCount, minPerActive, maxPerActive;
+    int nodeCount, minPerActive, maxPerActive, minSendDelay;
 
     unordered_map<int, Node> nodeInformation;
 
@@ -65,12 +65,14 @@ int main()
     nodeCount = stoi(split(firstLine, " ")[0]);
     minPerActive = stoi(split(firstLine, " ")[1]);
     maxPerActive = stoi(split(firstLine, " ")[2]);
+    minSendDelay = stoi(split(firstLine, " ")[3]);
     // assign global parameters
 
     // print global parameters
     cout << "Node Count : " << nodeCount << endl
          << "Min Per Active : " << minPerActive << endl
-         << "Max Per Active : " << maxPerActive << endl;
+         << "Max Per Active : " << maxPerActive << endl
+         << "Min Send Delay : " << minSendDelay << endl;
     // assign global parameters
 
     // create node map information
