@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "utility.cpp"
 using namespace std;
 
 class Node
