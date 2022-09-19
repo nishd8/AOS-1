@@ -1,53 +1,8 @@
 #include <bits/stdc++.h>
+#include "utility.cpp"
+#include "node.cpp"
+
 using namespace std;
-
-vector<string> split(string s, string delimiter)
-{
-    size_t pos = 0;
-    vector<string> words;
-    string token;
-    while ((pos = s.find(delimiter)) != string::npos)
-    {
-        token = s.substr(0, pos);
-        words.push_back(token);
-        s.erase(0, pos + delimiter.length());
-    }
-    words.push_back(s);
-
-    return words;
-}
-
-string vectorToString(vector<string> v)
-{
-    string s;
-    for (auto i : v)
-    {
-        s = s + i + " ";
-    }
-
-    return s;
-}
-
-class Node
-{
-public:
-    string hostName;
-    int port;
-    vector<string> neighbors;
-
-    Node() {}
-
-    Node(string h, int p)
-    {
-        hostName = h;
-        port = p;
-    }
-
-    void printNode()
-    {
-        cout << "{\n    Hostname : " << hostName << ",\n    Port : " << port << ",\n    Neighbors : " << vectorToString(neighbors) << "\n  },";
-    }
-};
 
 int main()
 {
