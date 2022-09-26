@@ -1,3 +1,5 @@
+import Client.Client;
+import Server.ServerRunnable;
 import java.util.*;
 import java.io.*;
 
@@ -6,9 +8,8 @@ public class Main {
         boolean isMaxed = false;
         for (Map.Entry<Integer, Nodes> entry : map.entrySet()) {
             Nodes value = entry.getValue();
-            if(value.getSendCount() != maxPerActive){
+            if(value.getSendCount() < maxPerActive){
                 isMaxed = true;
-                break;
             }
         }
 
@@ -19,7 +20,7 @@ public class Main {
         int nodes = 0, maxPerActive, minPerActive, minSendDelay;
         HashMap<Integer,Nodes> nodeArray = new HashMap<Integer, Nodes>();
 
-        File config = new File("src/config.txt");
+        File config = new File("config.txt");
         Scanner lineReader = new Scanner(config);
         String[] line;
         line = lineReader.nextLine().split(" ");
@@ -62,26 +63,38 @@ public class Main {
         int randMsgCount = new Random().nextInt((maxPerActive-minPerActive)+1) + minPerActive;
 
         int iteration =0;
+        Thread t1 = null;
+        Client client = null;
 
-        while (iteration<10){
-            Thread t1 = new Thread(new ServerRunnable(nodeArray.get(randomNeighKey).getPort()));
-            t1.start();
-
-
-            Client client = new Client("localhost",nodeArray.get(randomNeighKey).getPort());
+        while (checkIsMaxed(nodeArray,maxPerActive)){
 
             if(nodeArray.get(currentNodeKey).getSendCount()<maxPerActive){
+
+            Thread.sleep(minSendDelay);
+            t1 = new Thread(new ServerRunnable(nodeArray.get(randomNeighKey).getPort()));
+            t1.start();
+
+            Thread.sleep(2000);
+
+            client = new Client("localhost",nodeArray.get(randomNeighKey).getPort());
+
+
+
                 for(int i =0; i<=randMsgCount;i++){
                     if(i==randMsgCount){
                         client.sendMessage("Over");
                         client.closeConnection();
                         t1.join();
-                        Thread.sleep(minSendDelay);
                         nodeArray.get(currentNodeKey).setActive(false);
                         currentNodeKey = randomNeighKey;
+                        System.out.println(currentNodeKey);
                         neigh = nodeArray.get(currentNodeKey).getNeighbours();
                         randomNeighKey = Integer.parseInt(neigh[new Random().nextInt(neigh.length)]);
                         randMsgCount = new Random().nextInt((maxPerActive-minPerActive)+1) + minPerActive;
+                        if(randMsgCount + nodeArray.get(currentNodeKey).getSendCount() >= maxPerActive){
+                            randMsgCount =  maxPerActive - nodeArray.get(currentNodeKey).getSendCount();
+                        }
+                        break;
                     }
                     else {
                         client.sendMessage("Message : " + i);
