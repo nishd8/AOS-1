@@ -1,4 +1,4 @@
-// A Java program for a Server
+package Server;// A Java program for a Server.Server
 import java.net.*;
 import java.io.*;
 
@@ -12,11 +12,15 @@ public class Server
     // constructor with port
     public Server(int port)
     {
+        System.out.println("Server starting @ port :  " + port);
         // starts server and waits for a connection
         try
         {
-            server = new ServerSocket(port);
-            System.out.println("Server started");
+            server = new ServerSocket();
+            server.setReuseAddress(true);
+            server.bind(new InetSocketAddress(port));
+
+            System.out.println("Server started @ port :  " + port);
 
             System.out.println("Waiting for a client ...");
 
@@ -47,6 +51,7 @@ public class Server
 
             // close connection
             socket.close();
+            server.close();
             in.close();
         }
         catch(IOException i)

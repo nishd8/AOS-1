@@ -1,3 +1,5 @@
+package Client;
+
 import java.net.*;
 import java.io.*;
 
@@ -11,11 +13,12 @@ public class Client
     // constructor to put ip address and port
     public Client(String address, int port)
     {
+        System.out.println("Connecting to server on port : " + port);
         // establish a connection
         try
         {
             socket = new Socket(address, port);
-            System.out.println("Connected");
+            System.out.println("Connected to server on port : " + port);
 
 
             // sends output to the socket
@@ -24,26 +27,22 @@ public class Client
         catch(UnknownHostException u)
         {
             System.out.println(u);
-        }
-        catch(IOException i)
-        {
-            System.out.println(i);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void sendMessage(String message) throws IOException {
-        out.writeUTF(message);
+    public void sendMessage(String message) {
+        try {
+            out.writeUTF(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void closeConnection(){
-        try
-        {
+    public void closeConnection() throws IOException {
             out.close();
             socket.close();
-        }
-        catch(IOException i)
-        {
-            System.out.println(i);
-        }
+
     }
 }

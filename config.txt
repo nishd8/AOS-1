@@ -1,9 +1,7 @@
 3 5 10 2000
-
 0 localhost 5000
 1 localhost 6000
 2 localhost 7000
-
-1 2
-2 0
-0 1
+1 2 # s p a c e d e l i m i t e d l i s t o f n e i g h b o r s f o r node 0
+2 0 # s p a c e d e l i m i t e d l i s t o f n e i g h b o r s f o r node 1
+0 1 # s p a c e d e l i m i t e d l i s t o f n e i g h b o r s f o r node 2
