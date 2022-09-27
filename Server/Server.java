@@ -12,7 +12,7 @@ public class Server
     // constructor with port
     public Server(String host, int port)
     {
-        System.out.println("Server starting @ port :  " + port);
+        System.out.println("Server starting @ :  " + host + ":" + port);
         // starts server and waits for a connection
         try
         {
