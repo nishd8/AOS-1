@@ -22,7 +22,7 @@ public class Main {
         for(Map.Entry<Integer,Nodes> entry : nodesHashMap.entrySet()){
             Nodes value = entry.getValue();
             System.out.println("Creating Input Channel for Node : " + value.getNodeId());
-            Thread t = new Thread(new ServerRunnable(value.getPort()));
+            Thread t = new Thread(new ServerRunnable(value.getHost()+".utdallas.edu",value.getPort()));
             t.start();
             nodeInputChannels.put(value.getNodeId(),t);
             Thread.sleep(2000);
@@ -36,7 +36,7 @@ public class Main {
             HashMap<Integer,Client> neighbourChannels = new HashMap<>();
             for(int i =0; i<neighbours.length;i++){
                 neighbourChannels.put(Integer.parseInt(neighbours[i]),
-                        new Client("localhost",nodesHashMap.get(Integer.parseInt(neighbours[i])).getPort()));
+                        new Client(nodesHashMap.get(Integer.parseInt(neighbours[i])).getHost()+".utdallas.edu",nodesHashMap.get(Integer.parseInt(neighbours[i])).getPort()));
             }
             nodeOutput.put(value.getNodeId(),neighbourChannels);
         }

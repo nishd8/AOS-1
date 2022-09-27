@@ -10,7 +10,7 @@ public class Server
     private DataInputStream in       =  null;
 
     // constructor with port
-    public Server(int port)
+    public Server(String host, int port)
     {
         System.out.println("Server starting @ port :  " + port);
         // starts server and waits for a connection
@@ -18,9 +18,9 @@ public class Server
         {
             server = new ServerSocket();
             server.setReuseAddress(true);
-            server.bind(new InetSocketAddress(port));
+            server.bind(new InetSocketAddress(host,port));
 
-            System.out.println("Server started @ port :  " + port);
+            System.out.println("Server started @ :  " + host + ":" + port);
 
             System.out.println("Waiting for a client ...");
 
