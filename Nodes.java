@@ -16,6 +16,10 @@ public class Nodes {
         this.host = host;
     }
 
+    public Nodes() {
+
+    }
+
     public int getNodeId() {
         return nodeId;
     }

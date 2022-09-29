@@ -21,9 +21,9 @@ public class TrialMain {
     }
 
     public static Nodes findServerNode(HashMap<Integer, Nodes> map, String serverHost) {
-        Nodes serverNode = null;
+        Nodes serverNode = new Nodes();
         for (Map.Entry<Integer, Nodes> entry : map.entrySet()) {
-            if(entry.getValue().getHost() == serverHost){
+            if(entry.getValue().getHost().equals(serverHost)){
                 serverNode = entry.getValue();
                 break;
             }
