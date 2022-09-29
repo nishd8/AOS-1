@@ -6,6 +6,16 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
+    public static void initializeInputChannels(HashMap<Integer,Nodes> nodesHashMap, HashMap<Integer,Thread> nodeInputChannels) throws InterruptedException {
+        for(Map.Entry<Integer,Nodes> entry : nodesHashMap.entrySet()){
+            Nodes value = entry.getValue();
+            System.out.println("Creating Input Channel for Node : " + value.getNodeId());
+            Thread t = new Thread(new ServerRunnable(value.getHost()+".utdallas.edu",value.getPort()));
+            t.start();
+            nodeInputChannels.put(value.getNodeId(),t);
+            Thread.sleep(2000);
+        }
+    }
     public static boolean checkIsMaxed(HashMap<Integer, Nodes> map, int maxPerActive){
         boolean isMaxed = false;
         for (Map.Entry<Integer, Nodes> entry : map.entrySet()) {
@@ -17,16 +27,6 @@ public class Main {
         }
 
         return isMaxed;
-    }
-    public static void initializeInputChannels(HashMap<Integer,Nodes> nodesHashMap, HashMap<Integer,Thread> nodeInputChannels) throws InterruptedException {
-        for(Map.Entry<Integer,Nodes> entry : nodesHashMap.entrySet()){
-            Nodes value = entry.getValue();
-            System.out.println("Creating Input Channel for Node : " + value.getNodeId());
-            Thread t = new Thread(new ServerRunnable(value.getHost()+".utdallas.edu",value.getPort()));
-            t.start();
-            nodeInputChannels.put(value.getNodeId(),t);
-            Thread.sleep(2000);
-        }
     }
     public  static  void initializeOutputChannel(HashMap<Integer,Nodes> nodesHashMap, HashMap<Integer,HashMap<Integer,Client>> nodeOutput){
         for(Map.Entry<Integer,Nodes> entry : nodesHashMap.entrySet()){
